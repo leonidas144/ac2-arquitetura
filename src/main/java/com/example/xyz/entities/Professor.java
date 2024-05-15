@@ -1,0 +1,103 @@
+package com.example.xyz.entities;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+
+@Entity
+public class Professor {
+    
+    @Id
+    private String cpf;
+    private String nome;
+    private String rg;
+    private String endereco;
+    private String celular;
+    private String especialidade;
+    
+    @ManyToMany
+    @JoinTable(
+        name = "professor_curso",
+        joinColumns = @JoinColumn(name = "professor_id"),
+        inverseJoinColumns = @JoinColumn(name = "curso_id")
+    )
+    private List<Curso> cursos = new ArrayList<>();
+
+    public Professor() {
+    }
+
+    public Professor(String cpf, String nome, String rg, String endereco, String celular, String especialidade,
+            List<Curso> cursos) {
+        this.cpf = cpf;
+        this.nome = nome;
+        this.rg = rg;
+        this.endereco = endereco;
+        this.celular = celular;
+        this.especialidade = especialidade;
+        this.cursos = cursos;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getRg() {
+        return rg;
+    }
+
+    public void setRg(String rg) {
+        this.rg = rg;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getCelular() {
+        return celular;
+    }
+
+    public void setCelular(String celular) {
+        this.celular = celular;
+    }
+
+    public String getEspecialidade() {
+        return especialidade;
+    }
+
+    public void setEspecialidade(String especialidade) {
+        this.especialidade = especialidade;
+    }
+
+    public List<Curso> getCursos() {
+        return cursos;
+    }
+
+    public void setCursos(List<Curso> cursos) {
+        this.cursos = cursos;
+    }
+
+    
+}
