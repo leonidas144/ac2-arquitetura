@@ -4,11 +4,13 @@ package com.example.xyz.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Professor {
@@ -21,26 +23,19 @@ public class Professor {
     private String celular;
     private String especialidade;
     
-    @ManyToMany
-    @JoinTable(
-        name = "professor_curso",
-        joinColumns = @JoinColumn(name = "professor_id"),
-        inverseJoinColumns = @JoinColumn(name = "curso_id")
-    )
+    @OneToMany(cascade = CascadeType.REMOVE)
     private List<Curso> cursos = new ArrayList<>();
 
     public Professor() {
     }
 
-    public Professor(String cpf, String nome, String rg, String endereco, String celular, String especialidade,
-            List<Curso> cursos) {
+    public Professor(String cpf, String nome, String rg, String endereco, String celular, String especialidade) {
         this.cpf = cpf;
         this.nome = nome;
         this.rg = rg;
         this.endereco = endereco;
         this.celular = celular;
         this.especialidade = especialidade;
-        this.cursos = cursos;
     }
 
     public String getNome() {

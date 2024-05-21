@@ -1,12 +1,14 @@
 package com.example.xyz.entities;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Agenda {
@@ -22,15 +24,26 @@ public class Agenda {
     private String cep;
     private String diario;
 
-    private List<Professor> professores = new ArrayList<>();
 
-    private List<Curso> cursos = new ArrayList<>();
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinTable(
+        name = "agenda_professor",
+        joinColumns = @JoinColumn(name = "agenda_id"),
+        inverseJoinColumns = @JoinColumn(name = "professor_cpf"))
+    private Professor professor;
+
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinTable(
+        name = "agenda_curso",
+        joinColumns = @JoinColumn(name = "agenda_id"),
+        inverseJoinColumns = @JoinColumn(name = "curso_id"))
+    private Curso curso;
 
     public Agenda() {
     }
 
     public Agenda(Integer id, String nomeCurso, LocalDateTime dataInicio, LocalDateTime dataFim, String cidade,
-            String estado, String cep, String diario, List<Professor> professores, List<Curso> cursos) {
+            String estado, String cep, String diario, Professor professor, Curso curso) {
         this.id = id;
         this.nomeCurso = nomeCurso;
         this.dataInicio = dataInicio;
@@ -39,8 +52,8 @@ public class Agenda {
         this.estado = estado;
         this.cep = cep;
         this.diario = diario;
-        this.professores = professores;
-        this.cursos = cursos;
+        this.professor = professor;
+        this.curso = curso;
     }
 
     public String getNomeCurso() {
@@ -99,20 +112,20 @@ public class Agenda {
         this.diario = diario;
     }
 
-    public List<Professor> getProfessores() {
-        return professores;
+    public Professor getProfessor() {
+        return professor;
     }
 
-    public void setProfessores(List<Professor> professores) {
-        this.professores = professores;
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
     }
 
-    public List<Curso> getCursos() {
-        return cursos;
+    public Curso getCursos() {
+        return curso;
     }
 
-    public void setCursos(List<Curso> cursos) {
-        this.cursos = cursos;
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
 
     public Integer getId() {
