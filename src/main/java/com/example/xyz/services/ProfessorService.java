@@ -6,8 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.xyz.entities.Agenda;
-import com.example.xyz.entities.Curso;
 import com.example.xyz.entities.Professor;
 import com.example.xyz.repositories.ProfessorRepository;
 

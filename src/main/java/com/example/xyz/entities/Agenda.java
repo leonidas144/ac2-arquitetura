@@ -16,7 +16,6 @@ public class Agenda {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nomeCurso;
     private LocalDateTime dataInicio;
     private LocalDateTime dataFim;
     private String cidade;
@@ -42,10 +41,9 @@ public class Agenda {
     public Agenda() {
     }
 
-    public Agenda(Integer id, String nomeCurso, LocalDateTime dataInicio, LocalDateTime dataFim, String cidade,
+    public Agenda(Integer id, LocalDateTime dataInicio, LocalDateTime dataFim, String cidade,
             String estado, String cep, String diario, Professor professor, Curso curso) {
         this.id = id;
-        this.nomeCurso = nomeCurso;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.cidade = cidade;
@@ -54,14 +52,6 @@ public class Agenda {
         this.diario = diario;
         this.professor = professor;
         this.curso = curso;
-    }
-
-    public String getNomeCurso() {
-        return nomeCurso;
-    }
-
-    public void setNomeCurso(String nomeCurso) {
-        this.nomeCurso = nomeCurso;
     }
 
     public LocalDateTime getDataInicio() {

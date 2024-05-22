@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.example.xyz.entities.Agenda;
 import com.example.xyz.entities.Curso;
-import com.example.xyz.entities.Professor;
 import com.example.xyz.services.CursoService;
 
 @RestController
@@ -39,11 +37,16 @@ public class CursoController {
         return ResponseEntity.ok().body(obj);
    }
 
+   @GetMapping("/professor/{cpf}")
+   public List<Curso> getCursosByProfessor(@PathVariable String cpf) {
+       return service.getCursosByProfessorCpf(cpf);
+   }
+
    @PostMapping
-    public ResponseEntity<Curso> insert(@RequestBody Curso curso, Professor professor, Agenda agenda) {
-          Curso cursoInserido = service.insert(professor, curso, agenda);
-          URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cursoInserido.getId()).toUri();
-          return ResponseEntity.created(uri).body(cursoInserido);
+    public ResponseEntity<Curso> insert(@RequestBody Curso obj) {
+          obj = service.insert(obj);
+          URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+          return ResponseEntity.created(uri).body(obj);
     }
 
     @DeleteMapping(value = "/{id}")

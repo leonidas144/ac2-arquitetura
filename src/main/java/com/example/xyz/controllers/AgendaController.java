@@ -1,6 +1,5 @@
 package com.example.xyz.controllers;
 
-import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +12,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.xyz.entities.Agenda;
+import com.example.xyz.entities.Professor;
 import com.example.xyz.services.AgendaService;
 
 @RestController
@@ -37,11 +36,21 @@ public class AgendaController {
         return ResponseEntity.ok().body(obj);
    }
 
+   @GetMapping("/professor/{cpf}")
+    public ResponseEntity<List<Agenda>> getAgendaByProfessorCpf(@PathVariable String cpf) {
+        List<Agenda> agendas = service.findAgendaByProfessorCpf(cpf);
+        return ResponseEntity.ok().body(agendas);
+    }
+
+   @PostMapping("/cadastrar")
+   public Agenda cadastrarAgenda(@RequestBody Agenda agenda, Professor professor){
+    return service.cadastrarAgenda(agenda);
+   }
+
    @PostMapping
    public ResponseEntity <Agenda> insert(@RequestBody Agenda obj){
-        obj = service.insert(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).body(obj);
+        Agenda newAgenda = service.cadastrarAgenda(obj);   
+        return ResponseEntity.ok().body(newAgenda);
     }
 
     @DeleteMapping(value = "/{id}")

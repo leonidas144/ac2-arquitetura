@@ -1,7 +1,8 @@
 package com.example.xyz.entities;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -33,20 +34,21 @@ public class Curso {
     )
     private Professor professores;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.REMOVE)
-    private List<Agenda> agenda = new ArrayList<>();
+    @JsonBackReference
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.REMOVE)
+    private List<Agenda> agendas;
 
     
     public Curso() {
     }
 
-    public Curso(Integer id, String descricao, int cargaHoraria, String objetivo, String ementa, Professor professor) {
+    public Curso(Integer id, String descricao, int cargaHoraria, String objetivo, String ementa) {
         this.id = id;
         this.descricao = descricao;
         this.cargaHoraria = cargaHoraria;
         this.objetivo = objetivo;
         this.ementa = ementa;
-        this.professores = professor;
+        
     }
 
     public Integer getId() {
@@ -96,9 +98,14 @@ public class Curso {
 
     public void setProfessores(Professor professores) {
         this.professores = professores;
-    }   
+    }
 
-    
+    public List<Agenda> getAgendas() {
+        return agendas;
+    }
 
+    public void setAgendas(List<Agenda> agendas) {
+        this.agendas = agendas;
+    }
     
 }
