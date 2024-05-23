@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -42,6 +43,12 @@ public class AgendaController {
         return ResponseEntity.ok().body(agendas);
     }
 
+    @GetMapping("/professores/{cursoId}")
+    public ResponseEntity<List<Professor>> getProfessoresPorCurso(@PathVariable Integer cursoId) {
+        List<Professor> professores = service.findProfessoresByCursoEspecialidade(cursoId);
+        return ResponseEntity.ok().body(professores);
+    }
+
    @PostMapping("/cadastrar")
    public Agenda cadastrarAgenda(@RequestBody Agenda agenda, Professor professor){
     return service.cadastrarAgenda(agenda);
@@ -63,6 +70,12 @@ public class AgendaController {
     public ResponseEntity<Agenda> update(@PathVariable Integer id, @RequestBody Agenda obj) {
         obj = service.update(id, obj);
         return ResponseEntity.ok().body(obj);
+    }
+
+    @PatchMapping("/{id}/diario")
+    public ResponseEntity<Agenda> atualizarResumo(@PathVariable Integer id, @RequestBody String diario) {
+        Agenda agenda = service.atualizarResumo(id, diario);
+        return ResponseEntity.ok().body(agenda);
     }
 
     

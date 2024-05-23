@@ -16,18 +16,13 @@ public interface AgendaRepository extends JpaRepository <Agenda, Integer> {
 
      List<Agenda> findByProfessor(Professor professor);
 
-//      @Query("SELECT a FROM Agenda a WHERE a.professor = :professor AND " +
-//      "((a.dataInicio < :dataFim AND a.dataFim > :dataInicio) OR " +
-//      "(a.dataFim > :dataInicio AND a.dataInicio < :dataFim))")
-//     List<Agenda> findByProfessorAndHorario(@Param("professor") Professor professor,
-//                                      @Param("dataInicio") LocalDateTime dataInicio,
-//                                      @Param("dataFim") LocalDateTime dataFim);
-     
-                                     @Query("SELECT a FROM Agenda a WHERE a.professor = :professor AND " +
-                                     "(:dataInicio < a.dataFim AND :dataFim > a.dataInicio)")
-                              List<Agenda> findByProfessorAndHorario(@Param("professor") Professor professor,
-                                                                     @Param("dataInicio") LocalDateTime dataInicio,
-                                                                     @Param("dataFim") LocalDateTime dataFim);
+     @Query("SELECT a FROM Agenda a WHERE a.professor = :professor AND " +
+            "(:dataInicio < a.dataFim AND :dataFim > a.dataInicio)")
+     List<Agenda> findByProfessorAndHorario(@Param("professor") Professor professor,
+                                            @Param("dataInicio") LocalDateTime dataInicio,
+                                            @Param("dataFim") LocalDateTime dataFim);
+
+
 
 }
 

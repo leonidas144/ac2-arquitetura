@@ -41,6 +41,12 @@ public class AgendaService {
         return repository.findByProfessor(professor);
     }
 
+    public List<Professor> findProfessoresByCursoEspecialidade(Integer cursoId) {
+        Curso curso = cursoRepository.findById(cursoId)
+                .orElseThrow(() -> new IllegalArgumentException("Curso não encontrado com ID: " + cursoId));
+        return professorRepository.findByEspecialidade(curso.getDescricao());
+    }
+
     public Agenda insert(Agenda obj){
         return repository.save(obj);
     }
@@ -91,6 +97,12 @@ public class AgendaService {
         entity.setDataInicio(obj.getDataInicio());
         entity.setDataFim(obj.getDataFim());
         entity.setDiario(obj.getDiario());
+    }
+
+    public Agenda atualizarResumo(Integer id, String diario) {
+        Agenda agenda = findById(id);
+        agenda.setDiario(diario);
+        return repository.save(agenda);
     }
 
 
